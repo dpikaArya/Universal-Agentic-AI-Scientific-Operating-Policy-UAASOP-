@@ -1,0 +1,84 @@
+# Editor and OS junk
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+*.suo
+*.user
+*.log
+
+# Python / scientific caches
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+.conda/
+
+# Jupyter
+*.ipynb_checkpoints
+
+# Model weights / large generated data
+*.pt
+*.pth
+*.onnx
+*.h5
+*.hdf5
+*.joblib
+*.pickle
+*.parquet
+*.arrow
+*.feather
+*.npz
+*.npy
+data/raw/
+data/generated/
+
+# Secrets - never commit
+*.pem
+*.key
+*.p12
+*.pfx
+.env
+.env.*
+credentials*
+*credential*.json
+token*
+secrets.yml
+secrets.yaml
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+*.whl
+
+# R
+.Rhistory
+.RData
+.Rproj.user/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Node
+node_modules/
+
+# HPC / batch
+*.out
+*.err
+*.o[0-9]*
+*.e[0-9]*
