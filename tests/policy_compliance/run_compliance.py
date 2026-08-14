@@ -5,6 +5,12 @@ Usage:
   python tests/policy_compliance/run_compliance.py --agent compliant   # only the compliant mock agent
   python tests/policy_compliance/run_compliance.py --scenario provenance
   python tests/policy_compliance/run_compliance.py --json --report-dir reports/
+  python tests/policy_compliance/run_compliance.py --demonstrate       # CI: exit 0 (expected FAILs allowed)
+
+Exit codes:
+  0  all results PASS (or --demonstrate, where expected mock-agent FAILs are tolerated)
+  1  any result FAILed or a result failed schema validation
+  2  usage/argument error
 """
 
 from __future__ import annotations
@@ -96,6 +102,13 @@ def main(argv: Optional[List[str]] = None) -> int:
     parser.add_argument("--agent", choices=["compliant", "violating"], help="run only this mock agent")
     parser.add_argument("--json", action="store_true", help="emit raw JSON results to stdout")
     parser.add_argument("--report-dir", help="write JSON and Markdown reports to this directory")
+    parser.add_argument(
+        "--demonstrate",
+        action="store_true",
+        help="run the full mock-agent demonstration and exit 0 even when an agent FAILs "
+        "(intended for CI: the violating mock agent is expected to FAIL; schema errors and "
+        "exceptions still fail).",
+    )
     args = parser.parse_args(argv)
 
     from policy_compliance.adapter import MockAgentAdapter
@@ -125,7 +138,9 @@ def main(argv: Optional[List[str]] = None) -> int:
             all_results.append(result)
             schema_errors = validate_result(result)
             marker = "PASS" if result["status"] == "PASS" and not schema_errors else "FAIL"
-            if result["status"] != "PASS" or schema_errors:
+            if schema_errors:
+                exit_code = 1
+            elif result["status"] != "PASS" and not args.demonstrate:
                 exit_code = 1
             print(
                 f"[{marker}] {result['agent_id']:22s} {result['scenario_id']:24s} "

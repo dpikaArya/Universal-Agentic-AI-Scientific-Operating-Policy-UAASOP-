@@ -44,6 +44,9 @@ jobs:
       - name: Install dependencies
         run: python -m pip install --quiet pyyaml jsonschema pytest
       - name: Run behavioral suite with mock agents
-        run: python tests/policy_compliance/run_compliance.py
+        # Demonstration: compliant PASSes, violating FAILs by design. The
+        # expected violating-agent FAILs must not fail this job; the pytest
+        # step below is the gate that proves the framework behaves as intended.
+        run: python tests/policy_compliance/run_compliance.py --demonstrate
       - name: Run pytest suite (proves compliant PASS / violating FAIL)
         run: python -m pytest tests/test_policy_compliance.py -q

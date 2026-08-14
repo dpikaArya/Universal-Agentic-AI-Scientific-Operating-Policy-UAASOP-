@@ -106,9 +106,17 @@ python tests/policy_compliance/run_compliance.py --agent violating
 # Write JSON + Markdown reports
 python tests/policy_compliance/run_compliance.py --report-dir reports/
 
+# CI demonstration: run both agents and exit 0 even though the violating
+# mock agent FAILs by design (schema errors and exceptions still fail).
+python tests/policy_compliance/run_compliance.py --demonstrate
+
 # Full pytest suite (proves the framework detects non-compliance)
 python -m pytest tests/test_policy_compliance.py
 ```
+
+Exit codes: `0` when every result PASSes (or `--demonstrate` is set), `1` when any
+result FAILs (the violating mock agent is expected to FAIL, so omit `--demonstrate`
+when you want a hard gate, e.g. for a real-agent adapter), `2` on argument errors.
 
 Expected result: the compliant mock agent PASSes every scenario at level 4 and
 the violating mock agent FAILs every scenario.
