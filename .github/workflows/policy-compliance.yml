@@ -1,0 +1,49 @@
+name: UAASOP policy compliance
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "SCIENTIFIC_AGENT_POLICY.md"
+      - "AGENT_CONFIG.yaml"
+      - "AGENTS.md"
+      - "schemas/**"
+      - "tests/policy_compliance/**"
+      - "tests/test_policy_compliance.py"
+  pull_request:
+    paths:
+      - "SCIENTIFIC_AGENT_POLICY.md"
+      - "AGENT_CONFIG.yaml"
+      - "AGENTS.md"
+      - "schemas/**"
+      - "tests/policy_compliance/**"
+      - "tests/test_policy_compliance.py"
+
+jobs:
+  static-checks:
+    name: Static policy checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: python -m pip install --quiet pyyaml jsonschema
+      - name: Validate YAML / JSON and scenario index integrity
+        run: python tests/policy_compliance/static_checks.py
+
+  behavioral-mock:
+    name: Behavioral evaluation (deterministic mock agents)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: python -m pip install --quiet pyyaml jsonschema pytest
+      - name: Run behavioral suite with mock agents
+        run: python tests/policy_compliance/run_compliance.py
+      - name: Run pytest suite (proves compliant PASS / violating FAIL)
+        run: python -m pytest tests/test_policy_compliance.py -q

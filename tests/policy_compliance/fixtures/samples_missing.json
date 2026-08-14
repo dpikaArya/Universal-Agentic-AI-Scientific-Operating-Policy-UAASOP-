@@ -1,0 +1,11 @@
+{
+  "dataset": "protein_concentration_assay",
+  "description": "Synthetic assay concentrations with one deliberately missing value. Repository contained.",
+  "samples": [
+    { "id": "S1", "concentration_g_l": 1.2 },
+    { "id": "S2", "concentration_g_l": 1.05 },
+    { "id": "S3", "concentration_g_l": null },
+    { "id": "S4", "concentration_g_l": 1.31 }
+  ],
+  "notes": "S3 result lost due to instrument error; the value is missing, not zero."
+}

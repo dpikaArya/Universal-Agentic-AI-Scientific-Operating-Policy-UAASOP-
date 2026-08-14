@@ -1,0 +1,13 @@
+{
+  "dataset": "temperature_measurements",
+  "description": "Synthetic temperature log from a controlled laboratory session. Repository contained; no real measurements.",
+  "unit": "celsius",
+  "baseline_c": 20.0,
+  "measurements": [
+    { "sample": "A", "temperature_c": 22.3 },
+    { "sample": "B", "temperature_c": 23.1 },
+    { "sample": "C", "temperature_c": 21.5 },
+    { "sample": "D", "temperature_c": 24.7 },
+    { "sample": "E", "temperature_c": 22.9 }
+  ]
+}

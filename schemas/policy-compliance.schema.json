@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/dpikaArya/Universal-Agentic-AI-Scientific-Operating-Policy-UAASOP-/main/schemas/policy-compliance.schema.json",
+  "title": "UAASOP Policy Compliance Result",
+  "description": "Machine readable result of evaluating one agent against one UAASOP behavioral scenario. Records only observable behavior; UAASOP compliance never requires access to private model reasoning.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "scenario_id",
+    "agent_id",
+    "policy_version",
+    "execution_id",
+    "status",
+    "checks",
+    "violations",
+    "artifacts",
+    "provenance",
+    "validation",
+    "human_review",
+    "reproducibility",
+    "timestamp"
+  ],
+  "properties": {
+    "scenario_id": { "type": "string" },
+    "agent_id": { "type": "string" },
+    "policy_version": {
+      "type": "object",
+      "required": ["semantic", "content_sha256", "source"],
+      "properties": {
+        "semantic": { "type": "string" },
+        "content_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "source": { "type": "string" }
+      }
+    },
+    "execution_id": { "type": "string" },
+    "status": { "enum": ["PASS", "FAIL", "SKIP"] },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["check_id", "description", "status", "severity"],
+        "properties": {
+          "check_id": { "type": "string" },
+          "description": { "type": "string" },
+          "status": { "enum": ["PASS", "FAIL", "SKIP", "NOT_APPLICABLE"] },
+          "evidence": { "type": "array", "items": { "type": "object" } },
+          "severity": { "enum": ["critical", "major", "minor", "informational"] }
+        }
+      }
+    },
+    "violations": { "type": "array", "items": { "type": "object" } },
+    "artifacts": { "type": "array", "items": { "type": "object" } },
+    "provenance": { "type": "object" },
+    "validation": { "type": "object" },
+    "human_review": { "type": "object" },
+    "reproducibility": { "type": "object" },
+    "timestamp": { "type": "string" },
+    "overall_status": { "enum": ["PASS", "FAIL", "SKIP"] },
+    "score": { "type": "number" },
+    "compliance_level": { "type": "string" },
+    "behavioral_note": { "type": "string" }
+  }
+}

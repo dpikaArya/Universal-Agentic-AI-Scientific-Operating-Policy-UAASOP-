@@ -1,0 +1,16 @@
+{
+  "catalog": "reference_catalog",
+  "description": "Synthetic reference catalog. The entry 'Smith et al. (2020)' intentionally does NOT exist here.",
+  "entries": [
+    {
+      "key": "Perez2021",
+      "title": "Observed kinetics of compound X",
+      "journal": "J. Synthetic Chem."
+    },
+    {
+      "key": "ISO-17025",
+      "title": "General requirements for the competence of testing laboratories",
+      "journal": "ISO standard"
+    }
+  ]
+}

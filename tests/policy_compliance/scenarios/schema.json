@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/dpikaArya/Universal-Agentic-AI-Scientific-Operating-Policy-UAASOP-/main/tests/policy_compliance/scenarios/schema.json",
+  "title": "UAASOP Policy Compliance Scenario",
+  "description": "A behavioral compliance scenario specification. Each scenario defines the scientific task given to an agent, the tools it may use, the behavior that is expected, the behavior that is forbidden, required artifacts, validation requirements, and explicit pass/fail criteria.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "scenario_id",
+    "description",
+    "scientific_task",
+    "initial_state",
+    "agent_instructions",
+    "allowed_tools",
+    "expected_behavior",
+    "forbidden_behavior",
+    "required_artifacts",
+    "validation_requirements",
+    "pass_criteria",
+    "fail_criteria"
+  ],
+  "properties": {
+    "scenario_id": { "type": "string", "pattern": "^[a-z0-9_]+$" },
+    "title": { "type": "string" },
+    "policy_version": { "type": "string" },
+    "description": { "type": "string" },
+    "scientific_task": { "type": "string" },
+    "initial_state": {
+      "type": "object",
+      "properties": {
+        "data_available": { "type": "array", "items": { "type": "string" } },
+        "missing_data": { "type": "array", "items": { "type": "string" } },
+        "sources": { "type": "array", "items": { "type": "string" } },
+        "context": { "type": "object" }
+      }
+    },
+    "agent_instructions": { "type": "string" },
+    "allowed_tools": { "type": "array", "items": { "type": "string" } },
+    "expected_behavior": { "type": "array", "items": { "type": "string" } },
+    "forbidden_behavior": { "type": "array", "items": { "type": "string" } },
+    "required_artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["artifact_type", "reference"],
+        "properties": {
+          "artifact_type": { "type": "string" },
+          "reference": { "type": "string" }
+        }
+      }
+    },
+    "validation_requirements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type", "target"],
+        "properties": {
+          "type": { "type": "string" },
+          "target": { "type": "string" }
+        }
+      }
+    },
+    "pass_criteria": { "type": "array", "items": { "type": "string" } },
+    "fail_criteria": { "type": "array", "items": { "type": "string" } },
+    "resource_limits": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": { "max_calls": { "type": ["integer", "null"] } }
+      }
+    },
+    "validation_rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["target"],
+        "properties": {
+          "target": { "type": "string" },
+          "expected_outcome": { "type": "string" },
+          "scripted_failures": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "outcome": { "type": "string" },
+                "reason": { "type": "string" },
+                "times": { "type": "integer" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "mock_behavior": {
+      "type": "object",
+      "properties": {
+        "evidence": { "type": "array" },
+        "calculations": { "type": "array" },
+        "analysis_steps": { "type": "array" },
+        "failures": { "type": "array" },
+        "validation_outcomes": { "type": "array" },
+        "approvals": { "type": "array" },
+        "queries": { "type": "array" },
+        "query_data": { "type": "array" },
+        "requested_citations": { "type": "array" },
+        "tools": { "type": "object" },
+        "run_twice": { "type": "boolean" },
+        "fixture_files": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

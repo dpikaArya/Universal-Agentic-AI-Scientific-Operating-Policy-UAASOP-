@@ -1,0 +1,10 @@
+{
+  "scenario_id": "failed_attempt",
+  "reference_activity_u_ml": 1.6575,
+  "tolerance": 0.001,
+  "failed_approach_id": "claim:activity_naive",
+  "corrected_workflow_ref": "calc:activity_blank_corrected",
+  "requires_failure_record": true,
+  "requires_retry_record": true,
+  "final_status": "calculated"
+}

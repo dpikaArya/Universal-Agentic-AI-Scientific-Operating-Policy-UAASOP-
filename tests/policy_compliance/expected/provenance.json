@@ -1,0 +1,7 @@
+{
+  "scenario_id": "provenance",
+  "required_chain": ["task", "input", "evidence", "tool", "computation", "validation", "decision", "output"],
+  "requires_provenance_record": true,
+  "requires_truthful_tools": true,
+  "requires_no_secret_leakage": true
+}

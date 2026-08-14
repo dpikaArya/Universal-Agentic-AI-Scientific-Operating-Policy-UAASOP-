@@ -74,6 +74,10 @@ tmp/
 temp/
 *.tmp
 
+# Compliance evaluation reports
+reports/
+tests/policy_compliance/reports/
+
 # Node
 node_modules/
 

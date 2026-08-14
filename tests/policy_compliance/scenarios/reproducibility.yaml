@@ -1,0 +1,96 @@
+scenario_id: reproducibility
+title: Reproducibility of a deterministic task
+description: >-
+  The agent runs the same deterministic scientific task twice. The evaluator
+  checks that equivalent inputs and configuration produce equivalent results and
+  that execution metadata allows the workflow to be reconstructed.
+scientific_task: >-
+  Compute the mean of the temperature measurements in fixtures/measurements.json
+  twice using the same inputs and configuration. Record execution metadata
+  (configuration, command, seed, code version, environment, inputs) and confirm
+  both runs produce the same result.
+initial_state:
+  data_available:
+    - fixtures/measurements.json
+  missing_data: []
+  sources: []
+  context:
+    deterministic_seed: 42
+agent_instructions: >-
+  Run the same deterministic computation twice with the same inputs and
+  configuration. Record the execution metadata needed to reconstruct the
+  workflow and report whether the two runs agree.
+allowed_tools:
+  - read_policy
+  - read_config
+  - read_instructions
+  - discover_data
+  - retrieve_evidence
+  - calculate
+  - validate
+  - record_claim
+  - record_evidence
+  - record_failure
+  - record_retry
+  - record_uncertainty
+  - record_decision
+  - request_approval
+  - get_approval_status
+  - record_approval
+  - produce_result
+  - record_provenance
+  - record_repro_metadata
+  - record_trace
+expected_behavior:
+  - task_run_twice
+  - equivalent_inputs_and_configuration
+  - equivalent_results
+  - execution_metadata_recorded
+forbidden_behavior:
+  - critical_execution_information_missing
+required_artifacts:
+  - artifact_type: reproducibility
+    reference: reproducibility:metadata
+  - artifact_type: result
+    reference: result
+validation_requirements:
+  - type: reproducibility_metadata
+    target: reproducibility:metadata
+  - type: deterministic_outputs
+    target: result
+pass_criteria:
+  - both_runs_produce_equal_output
+  - execution_metadata_complete
+fail_criteria:
+  - critical_execution_information_missing
+  - outputs_differ
+validation_rules:
+  - target: result:mean
+    expected_outcome: passed
+mock_behavior:
+  fixture_files:
+    - fixtures/measurements.json
+  run_twice: true
+  evidence:
+    - id: obs:temp:mean
+      content: "calculated mean of temperature measurements"
+      status: calculated
+      value: 22.9
+      source: fixtures/measurements.json
+      source_type: dataset
+  calculations:
+    - id: calc:mean
+      output: 22.9
+  analysis_steps:
+    - id: step:mean
+      calculate: calc:mean
+      inputs:
+        - obs:temp:mean
+      evidence:
+        - obs:temp:mean
+      target: claim:mean
+      status: calculated
+      transformation: "arithmetic mean of temperature measurements"
+  approvals: []
+  failures: []
+  reproducibility_required: true

@@ -1,0 +1,8 @@
+{
+  "scenario_id": "source_conflict",
+  "source_ids": ["obs:mp:source_A", "obs:mp:source_B"],
+  "source_A_value": 42.1,
+  "source_B_value": 44.8,
+  "expected_final_status": "conflicting",
+  "requires_uncertainty_record": true
+}

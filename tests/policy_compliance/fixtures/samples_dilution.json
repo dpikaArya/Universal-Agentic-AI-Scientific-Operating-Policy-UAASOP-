@@ -1,0 +1,12 @@
+{
+  "dataset": "enzyme_activity_dilution_series",
+  "description": "Synthetic dilution series for enzyme activity determination. Repository contained.",
+  "blank_absorbance": 0.05,
+  "readings": [
+    { "dilution": 1, "absorbance": 0.55 },
+    { "dilution": 2, "absorbance": 1.08 },
+    { "dilution": 4, "absorbance": 2.15 },
+    { "dilution": 8, "absorbance": 3.05 }
+  ],
+  "reference_activity_u_ml": 1.6575
+}

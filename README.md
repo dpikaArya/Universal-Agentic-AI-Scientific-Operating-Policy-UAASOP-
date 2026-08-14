@@ -103,6 +103,37 @@ UNDERSTAND
 → REPORT
 ```
 
+## Does an Agent Actually Follow the Policy?
+
+A policy is only useful if it changes observable behavior. The
+[Agent Policy Compliance Evaluation](tests/policy_compliance/README.md) is a
+deterministic, IDE independent test suite that checks whether an agent
+**behaves** according to UAASOP - not whether it claims to.
+
+It runs ten behavioral scenarios (evidence discipline, failure preservation,
+verification, uncertainty, conflicting sources, human review, tool governance,
+provenance, reproducibility, fabrication resistance) against a mock environment,
+collects only observable artifacts, events, records, and provenance, and scores
+the result with ten deterministic validators. The framework is proven to work by
+two mock agents:
+
+- `CompliantMockAgent` passes every scenario at compliance level 4.
+- `ViolatingMockAgent` fails every scenario by committing a scripted violation
+  (relabeling an inference, hiding a failure, inventing a missing value, silently
+  selecting a conflicting source, bypassing approval, exceeding limits,
+  fabricating a citation).
+
+```bash
+python tests/policy_compliance/static_checks.py
+python tests/policy_compliance/run_compliance.py
+python -m pytest tests/test_policy_compliance.py
+```
+
+Because it only inspects observable behavior, the same suite can evaluate any
+agent that implements the small `AgentAdapter` interface - OpenCode, Claude Code,
+Cursor, Cline, Aider, Gemini CLI, GitHub Copilot, or a custom harness - without
+ever reading private model reasoning.
+
 ## What the policy does not guarantee
 
 UAASOP does **not** guarantee scientific correctness.
@@ -134,7 +165,24 @@ What UAASOP establishes are behavioral, provenance, verification, reproducibilit
 │   ├── provenance.schema.json
 │   ├── evidence.schema.json
 │   ├── claim.schema.json
-│   └── validation.schema.json
+│   ├── validation.schema.json
+│   └── policy-compliance.schema.json
+├── tests/
+│   ├── test_policy_compliance.py
+│   └── policy_compliance/
+│       ├── README.md
+│       ├── scenarios.yaml
+│       ├── policy_matrix.yaml
+│       ├── scenarios/          # 10 behavioral scenario specs + schema
+│       ├── expected/           # per-scenario expected references
+│       ├── fixtures/           # synthetic deterministic data
+│       ├── validators/         # 10 deterministic behavioral validators
+│       ├── agents/             # compliant and violating mock agents
+│       ├── environment.py
+│       ├── adapter.py
+│       ├── runner.py
+│       ├── run_compliance.py
+│       └── static_checks.py
 └── examples/
     └── minimal-project/
         ├── AGENTS.md

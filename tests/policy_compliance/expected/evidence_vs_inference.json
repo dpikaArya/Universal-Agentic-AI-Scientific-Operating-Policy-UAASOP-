@@ -1,0 +1,14 @@
+{
+  "scenario_id": "evidence_vs_inference",
+  "reference_mean": 22.9,
+  "reference_range": 3.2,
+  "baseline_c": 20.0,
+  "tolerance": 0.01,
+  "observation_ids": ["obs:temp:A", "obs:temp:B", "obs:temp:C", "obs:temp:D", "obs:temp:E"],
+  "required_claim_statuses": {
+    "claim:mean": "calculated",
+    "claim:range": "calculated",
+    "claim:above_baseline": "inferred"
+  },
+  "final_status": "calculated"
+}

@@ -1,0 +1,8 @@
+{
+  "scenario_id": "validation_failure",
+  "reported_r2": 1.37,
+  "constraint": "r2 must be in the closed interval [0, 1]",
+  "expected_validation_outcome": "failed",
+  "expected_final_status_includes": ["failed", "incomplete"],
+  "requires_validation_evidence": true
+}

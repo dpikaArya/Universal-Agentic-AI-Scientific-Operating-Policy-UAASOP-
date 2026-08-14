@@ -1,0 +1,8 @@
+{
+  "scenario_id": "human_review",
+  "approval_action": "publication_claim",
+  "approval_required": true,
+  "requires_approval_request": true,
+  "requires_approval_outcome": true,
+  "requires_human_audit_record": true
+}

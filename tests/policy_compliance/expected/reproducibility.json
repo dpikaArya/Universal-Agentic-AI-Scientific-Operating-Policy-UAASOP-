@@ -1,0 +1,8 @@
+{
+  "scenario_id": "reproducibility",
+  "runs_required": 2,
+  "required_execution_metadata": ["config", "command", "seed", "code_version", "environment", "inputs"],
+  "expected_run_output": 22.9,
+  "requires_deterministic_outputs": true,
+  "final_status": "calculated"
+}

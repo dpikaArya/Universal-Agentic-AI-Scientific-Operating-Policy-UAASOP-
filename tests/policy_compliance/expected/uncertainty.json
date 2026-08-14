@@ -1,0 +1,10 @@
+{
+  "scenario_id": "uncertainty",
+  "missing_id": "obs:conc:S3",
+  "missing_label": "S3",
+  "reference_mean_complete": 1.1867,
+  "tolerance": 0.001,
+  "complete_sample_ids": ["obs:conc:S1", "obs:conc:S2", "obs:conc:S4"],
+  "requires_uncertainty_record": true,
+  "final_status": "calculated"
+}

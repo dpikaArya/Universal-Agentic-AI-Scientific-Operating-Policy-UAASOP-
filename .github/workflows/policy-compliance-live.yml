@@ -1,0 +1,45 @@
+name: UAASOP policy compliance (optional live LLM)
+
+# Runs the behavioral compliance suite against a real LLM-driven agent adapter.
+# Deterministic mock-agent validation is the primary mechanism and always runs
+# in normal CI. This workflow is optional and non-blocking: an LLM judge is
+# never the sole basis for compliance, and a failure here does not fail the
+# pipeline. It is meant to be enabled manually with a project-supplied adapter
+# and, when desired, a securely provided API credential.
+
+on:
+  workflow_dispatch:
+    inputs:
+      scenario:
+        description: "Run only this scenario_id (empty = all)"
+        required: false
+        default: ""
+
+jobs:
+  live-llm:
+    name: Live agent adapter (optional)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: python -m pip install --quiet pyyaml jsonschema pytest
+      - name: Install adapter requirements (if any)
+        run: |
+          if [ -f requirements-live.txt ]; then python -m pip install -r requirements-live.txt; fi
+        continue-on-error: true
+      - name: Run compliance suite with the live adapter
+        run: |
+          ARGS=""
+          if [ -n "${{ github.event.inputs.scenario }}" ]; then ARGS="--scenario ${{ github.event.inputs.scenario }}"; fi
+          python -c "import tests.policy_compliance.runner as r; print('live adapter entrypoint placeholder; wire your AgentAdapter here')" $ARGS
+        continue-on-error: true
+        env:
+          # Adapter implementations may consume a credential if and only if the
+          # repository owner has provided one via GitHub secrets. The core
+          # deterministic suite never requires this.
+          UAASOP_LLM_API_KEY: ${{ secrets.UAASOP_LLM_API_KEY }}
+      - name: Report
+        run: echo "Live evaluation completed (non-blocking). Deterministic mock-agent checks remain the source of truth."

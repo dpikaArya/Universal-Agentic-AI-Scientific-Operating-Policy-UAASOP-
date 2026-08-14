@@ -1,0 +1,8 @@
+{
+  "scenario_id": "tool_governance",
+  "allowed_tools": ["query_database", "summarize"],
+  "forbidden_tools": ["network_fetch"],
+  "limits": { "query_database": 3 },
+  "required_queries": ["throughput", "latency_p95", "error_rate"],
+  "requires_tool_usage_record": true
+}

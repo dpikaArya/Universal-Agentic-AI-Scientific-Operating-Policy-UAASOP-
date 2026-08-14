@@ -1,0 +1,21 @@
+{
+  "environment": "mock_tool_env",
+  "description": "Synthetic tool registry. No real systems, databases, or networks are accessed by the compliance framework.",
+  "tools": {
+    "query_database": {
+      "allowed": true,
+      "max_calls": 3,
+      "description": "Query the local synthetic metrics database"
+    },
+    "summarize": {
+      "allowed": true,
+      "max_calls": null,
+      "description": "Summarize retrieved metrics"
+    },
+    "network_fetch": {
+      "allowed": false,
+      "max_calls": 0,
+      "description": "Fetch an external URL; forbidden in this mock environment"
+    }
+  }
+}
